@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Видеопродакшн: трейлеры, соцсети, VFX и AI. Бронирование созвона онлайн.">
+  <title>Roman Penko — Видеопродакшн</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▶</text></svg>">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#home" class="header__logo" data-config="brand">STAY</a>
+
+      <nav class="header__nav" id="headerNav" aria-label="Основная навигация"></nav>
+
+      <div class="header__actions">
+        <div class="header__social" id="headerSocial"></div>
+        <button class="header__burger" id="burger" aria-label="Меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile nav -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Мобильная навигация">
+    <div class="mobile-nav__links" id="mobileNavLinks"></div>
+    <div class="mobile-nav__social" id="mobileNavSocial"></div>
+  </nav>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="hero__video-bg" aria-hidden="true">
+        <video autoplay muted loop playsinline poster="assets/images/hero-poster.svg">
+          <source src="assets/video/hero-reel.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="container hero__content">
+        <p class="eyebrow reveal" data-config="tagline">Видеопродакшн и постпродакшн</p>
+        <h1 class="hero__title reveal">
+          <span data-config="heroTitle">Трейлеры, соцсети, VFX</span>
+          <span data-config="heroSubtitle">и AI-продакшн</span>
+        </h1>
+        <p class="hero__description reveal" data-config="heroDescription">
+          Создаю трейлеры к фильмам, видео для социальных сетей и визуальные эффекты.
+        </p>
+        <div class="hero__actions reveal">
+          <a href="#portfolio" class="btn btn--primary btn--large">Смотреть работы</a>
+          <a href="#contact" class="btn btn--secondary btn--large">Записаться на созвон</a>
+        </div>
+      </div>
+      <div class="hero__scroll-hint" aria-hidden="true">
+        <span>Листайте</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="section" id="portfolio">
+      <div class="container">
+        <div class="section__header section__header--center reveal">
+          <h2 class="section-title section-title--underline">Portfolio</h2>
+        </div>
+        <div class="portfolio__filters-wrap reveal">
+          <div class="portfolio__filters" id="portfolioFilters" role="tablist"></div>
+        </div>
+        <div class="portfolio__grid reveal" id="portfolioGrid" role="tabpanel"></div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section about" id="about">
+      <div class="container">
+        <div class="section__header section__header--center reveal">
+          <h2 class="section-title section-title--underline">About</h2>
+        </div>
+        <div class="about__grid">
+          <div class="about__image reveal">
+            <img src="assets/images/about.svg" alt="Фото" id="aboutPhoto" loading="lazy">
+          </div>
+          <div class="about__content reveal">
+            <div id="aboutText"></div>
+            <div class="about__stats" id="aboutStats"></div>
+            <a href="assets/resume.pdf" class="btn btn--secondary about__resume-btn" id="resumeDownload" download>
+              Скачать резюме PDF
+            </a>
+          </div>
+        </div>
+        <div class="resume__content reveal" id="resumeBlock">
+          <div class="resume__skills" id="resumeSkills"></div>
+          <div class="resume__timeline" id="resumeTimeline"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section__header section__header--center reveal">
+          <h2 class="section-title section-title--underline">Our Services</h2>
+        </div>
+        <div class="services__grid" id="servicesGrid"></div>
+        <div class="festival-banner reveal" id="festivalBanner"></div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials" id="testimonials">
+      <div class="container">
+        <div class="section__header section__header--center reveal">
+          <h2 class="section-title section-title--underline">Testimonials</h2>
+        </div>
+        <div class="testimonials__grid reveal" id="testimonialsGrid"></div>
+      </div>
+    </section>
+
+    <!-- Contact / Booking -->
+    <section class="section booking" id="contact">
+      <div class="container">
+        <div class="section__header section__header--center reveal">
+          <h2 class="section-title section-title--underline">Contact</h2>
+          <p class="booking__lead">
+            Выберите удобную дату и время — обсудим ваш проект, сроки и формат работы.
+          </p>
+        </div>
+
+        <div class="booking__grid reveal">
+          <div class="booking__calendar">
+            <div class="booking__panel">
+              <div class="calendar calendar--compact" id="calendar"></div>
+              <div class="time-slots" id="timeSlots" hidden>
+                <p class="time-slots__label">Выберите время</p>
+                <div class="time-slots__grid time-slots__grid--compact" id="timeSlotsGrid"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="booking__fields">
+            <div class="booking__panel">
+              <form id="bookingForm" novalidate>
+                <div class="form-group">
+                  <label class="form-label" for="bookingName">Имя</label>
+                  <input type="text" class="form-input" id="bookingName" name="name" required placeholder="Ваше имя">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="bookingEmail">Email</label>
+                  <input type="email" class="form-input" id="bookingEmail" name="email" required placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="bookingMessage">О проекте <span class="form-label-optional">(необязательно)</span></label>
+                  <textarea class="form-textarea" id="bookingMessage" name="message" placeholder="Кратко опишите задачу"></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary btn--large form-submit" id="bookingSubmit" disabled>
+                  Забронировать созвон
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">&copy; <span id="footerYear"></span> <span data-config="name">Roman Penko</span></p>
+      <div class="footer__links">
+        <a href="#portfolio" class="footer__link">Portfolio</a>
+        <a href="#about" class="footer__link">About</a>
+        <a href="#contact" class="footer__link">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Video modal -->
+  <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="Видео">
+    <button class="modal__close" id="modalClose" aria-label="Закрыть">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <div class="modal__content">
+      <iframe class="modal__iframe" id="modalIframe" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/portfolio.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
