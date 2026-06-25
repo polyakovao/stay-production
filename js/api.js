@@ -30,7 +30,7 @@ const Api = {
     await delay(800);
     return {
       success: true,
-      message: "Заявка отправлена! Я свяжусь с вами для подтверждения.",
+      message: "Request sent! I'll contact you to confirm.",
     };
   },
 
@@ -87,7 +87,7 @@ const Api = {
 
     console.log("[API Mock] POST", endpoint, data);
     await delay(600);
-    return { success: true, message: "Сообщение отправлено!" };
+    return { success: true, message: "Message sent!" };
   },
 };
 

@@ -1,5 +1,5 @@
 /**
- * Portfolio — genre filtering and video modal
+ * Portfolio — filters, grid, category blocks, video modal
  */
 
 const Portfolio = {
@@ -9,12 +9,14 @@ const Portfolio = {
   init() {
     this.elements.filters = document.getElementById("portfolioFilters");
     this.elements.grid = document.getElementById("portfolioGrid");
+    this.elements.blocks = document.getElementById("portfolioBlocks");
     this.elements.modal = document.getElementById("videoModal");
     this.elements.iframe = document.getElementById("modalIframe");
     this.elements.modalClose = document.getElementById("modalClose");
 
     this.renderFilters();
     this.renderGrid();
+    this.renderBlocks();
     this.bindEvents();
   },
 
@@ -39,8 +41,16 @@ const Portfolio = {
         ? SITE_CONFIG.portfolio
         : SITE_CONFIG.portfolio.filter((v) => v.genre === this.currentFilter);
 
+    this.elements.blocks.hidden = this.currentFilter !== "all";
+    this.elements.grid.hidden = this.currentFilter === "all";
+
+    if (this.currentFilter === "all") {
+      this.elements.grid.innerHTML = "";
+      return;
+    }
+
     if (videos.length === 0) {
-      this.elements.grid.innerHTML = `<p class="portfolio__empty">Работы в этой категории скоро появятся</p>`;
+      this.elements.grid.innerHTML = `<p class="portfolio__empty">No work in this category yet</p>`;
       return;
     }
 
@@ -48,22 +58,51 @@ const Portfolio = {
       SITE_CONFIG.genres.filter((g) => g.id !== "all").map((g) => [g.id, g.label])
     );
 
-    this.elements.grid.innerHTML = videos
-      .map(
-        (video) => `
-        <article class="portfolio-card" data-video-id="${video.youtubeId}" tabindex="0" role="button" aria-label="Смотреть: ${video.title}">
-          <img class="portfolio-card__thumb" src="${video.thumbnail}" alt="${video.title}" loading="lazy">
-          <div class="portfolio-card__play" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <div class="portfolio-card__overlay">
-            <h3 class="portfolio-card__title">${video.title}</h3>
-            <p class="portfolio-card__genre">${genreLabels[video.genre] || ""}</p>
-          </div>
-        </article>
-      `
-      )
+    this.elements.grid.innerHTML = videos.map((video) => this.renderCard(video, genreLabels)).join("");
+  },
+
+  renderBlocks() {
+    const genresWithWork = SITE_CONFIG.genres.filter(
+      (g) => g.id !== "all" && SITE_CONFIG.portfolio.some((v) => v.genre === g.id)
+    );
+
+    this.elements.blocks.innerHTML = genresWithWork
+      .map((genre) => {
+        const items = SITE_CONFIG.portfolio.filter((v) => v.genre === genre.id);
+        return `
+          <section class="portfolio-block">
+            <h3 class="portfolio-block__title">${genre.label}</h3>
+            <div class="portfolio-block__grid">
+              ${items
+                .map(
+                  (video) => `
+                <article class="portfolio-block__item" data-video-id="${video.youtubeId}" tabindex="0" role="button" aria-label="Watch: ${video.title}">
+                  <img src="${video.thumbnail}" alt="${video.title}" loading="lazy">
+                  <span class="portfolio-block__label">${video.title}</span>
+                </article>
+              `
+                )
+                .join("")}
+            </div>
+          </section>
+        `;
+      })
       .join("");
+  },
+
+  renderCard(video, genreLabels) {
+    return `
+      <article class="portfolio-card" data-video-id="${video.youtubeId}" tabindex="0" role="button" aria-label="Watch: ${video.title}">
+        <img class="portfolio-card__thumb" src="${video.thumbnail}" alt="${video.title}" loading="lazy">
+        <div class="portfolio-card__play" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="portfolio-card__overlay">
+          <h3 class="portfolio-card__title">${video.title}</h3>
+          <p class="portfolio-card__genre">${genreLabels[video.genre] || ""}</p>
+        </div>
+      </article>
+    `;
   },
 
   bindEvents() {
@@ -79,19 +118,24 @@ const Portfolio = {
       this.renderGrid();
     });
 
-    this.elements.grid.addEventListener("click", (e) => {
-      const card = e.target.closest(".portfolio-card");
+    const openFromClick = (e) => {
+      const card = e.target.closest("[data-video-id]");
       if (card) this.openModal(card.dataset.videoId);
-    });
+    };
 
-    this.elements.grid.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        const card = e.target.closest(".portfolio-card");
-        if (card) {
-          e.preventDefault();
-          this.openModal(card.dataset.videoId);
+    this.elements.grid.addEventListener("click", openFromClick);
+    this.elements.blocks.addEventListener("click", openFromClick);
+
+    [this.elements.grid, this.elements.blocks].forEach((el) => {
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          const card = e.target.closest("[data-video-id]");
+          if (card) {
+            e.preventDefault();
+            this.openModal(card.dataset.videoId);
+          }
         }
-      }
+      });
     });
 
     this.elements.modalClose.addEventListener("click", () => this.closeModal());

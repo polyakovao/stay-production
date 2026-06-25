@@ -1,14 +1,11 @@
 /**
- * Site configuration — edit this file to customize content.
+ * Site configuration — edit content here.
  */
 const SITE_CONFIG = {
-  brand: "STAY",
-  name: "Roman Penko",
-  tagline: "Видеопродакшн и постпродакшн",
-  heroTitle: "Трейлеры, соцсети, VFX",
-  heroSubtitle: "и AI-продакшн",
-  heroDescription:
-    "Создаю трейлеры к фильмам, видео для социальных сетей и визуальные эффекты. Работаю с AI-инструментами: Higgsfield, ChatGPT, Claude.",
+  name: "Roman Osipenko",
+  roles: "AI Filmmaker · Senior Editor · VFX Artist",
+  tagline: "Cinematic video production & post-production",
+  bio: "Crafting cinematic commercials, trailers and AI-driven visuals for modern brands.",
   email: "hello@example.com",
   phone: "+79990000000",
   telegram: "@username",
@@ -16,12 +13,50 @@ const SITE_CONFIG = {
   resumeUrl: "assets/resume.pdf",
 
   navigation: [
-    { id: "home", label: "Home", href: "#home" },
-    { id: "portfolio", label: "Portfolio", href: "#portfolio" },
+    { id: "home", label: "Work", href: "#home" },
     { id: "about", label: "About", href: "#about" },
-    { id: "services", label: "Our Services", href: "#services" },
-    { id: "testimonials", label: "Testimonials", href: "#testimonials" },
+    { id: "process", label: "Process", href: "#process" },
     { id: "contact", label: "Contact", href: "#contact" },
+  ],
+
+  headerCta: [
+    { label: "Submit to Festivals", href: "#festivals", external: false },
+    { label: "Book a Call", href: "#contact", external: false },
+  ],
+
+  heroSlides: [
+    {
+      type: "intro",
+      background: "assets/images/hero-poster.svg",
+    },
+    {
+      type: "video",
+      title: "Drama Trailer",
+      caption: "Emotional pacing, sound design and narrative arc for an indie feature.",
+      youtubeId: "dQw4w9WgXcQ",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    },
+    {
+      type: "video",
+      title: "Brand Reels",
+      caption: "Short-form social content — hooks, rhythm and platform-native editing.",
+      youtubeId: "dQw4w9WgXcQ",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    },
+    {
+      type: "video",
+      title: "VFX & AI",
+      caption: "Generative AI scenes blended with traditional compositing and color.",
+      youtubeId: "dQw4w9WgXcQ",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    },
+    {
+      type: "video",
+      title: "Showreel 2025",
+      caption: "Selected work across trailers, social, VFX and festival submissions.",
+      youtubeId: "dQw4w9WgXcQ",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    },
   ],
 
   api: {
@@ -38,46 +73,34 @@ const SITE_CONFIG = {
     daysOff: [0, 6],
   },
 
-  services: [
-    {
-      id: "trailers",
-      title: "Трейлеры к фильмам",
-      description:
-        "Создание динамичных трейлеров, тизеров и промо-роликов для кино и сериалов.",
-      icon: "film",
-    },
-    {
-      id: "social",
-      title: "Видео для соцсетей",
-      description:
-        "Контент для Instagram, TikTok, YouTube — от идеи до финального монтажа.",
-      icon: "share",
-    },
-    {
-      id: "vfx",
-      title: "VFX и AI-продакшн",
-      description:
-        "Визуальные эффекты, AI-генерация и постпродакшн с Higgsfield, ChatGPT, Claude.",
-      icon: "sparkles",
-    },
-  ],
+  process: {
+    title: "AI-first creative workflow",
+    description:
+      "From concept to final delivery — combining editing, VFX, motion design and generative AI into one cinematic pipeline.",
+    steps: [
+      { title: "Brief & concept", text: "Goals, references, platform and timeline alignment." },
+      { title: "Edit & story", text: "Assembly, pacing, sound and narrative structure." },
+      { title: "VFX & AI", text: "Compositing, generative scenes with Higgsfield, ChatGPT, Claude." },
+      { title: "Delivery", text: "Final exports, formats and revisions." },
+    ],
+  },
 
   festivalService: {
-    title: "Отправка на фестивали под ключ",
+    title: "Festival submissions — end to end",
     description:
-      "Создаю страницу на FilmFreeway, подбираю фестивали под уровень вашего фильма и формирую календарь с дедлайнами и статусами.",
-    tags: ["FilmFreeway", "Подбор фестивалей", "Календарь дедлайнов", "Отслеживание статусов"],
+      "FilmFreeway setup, festival matching based on your film's level, deadline calendar and status tracking.",
+    tags: ["FilmFreeway", "Festival matching", "Deadline calendar", "Status tracking"],
   },
 
   about: {
     paragraphs: [
-      "Видеоредактор и постпродакшн-специалист с фокусом на кино и digital-контент. Создаю трейлеры, которые рассказывают историю, и видео, которое работает в соцсетях.",
-      "Работаю с современными AI-инструментами для ускорения продакшна без потери качества. Помогаю независимым режиссёрам вывести фильмы на международные фестивали.",
+      "Video editor and post-production specialist focused on film and digital content. I create trailers that tell a story and social videos built to perform.",
+      "I work with modern AI tools to speed up production without sacrificing quality, and help independent filmmakers reach international festivals.",
     ],
     stats: [
-      { value: "50+", label: "проектов" },
-      { value: "5+", label: "лет опыта" },
-      { value: "15+", label: "фестивалей" },
+      { value: "50+", label: "projects" },
+      { value: "5+", label: "years" },
+      { value: "15+", label: "festivals" },
     ],
     photo: "assets/images/about.svg",
   },
@@ -95,37 +118,35 @@ const SITE_CONFIG = {
     ],
     experience: [
       {
-        title: "Видеоредактор / Постпродакшн",
-        period: "2020 — настоящее время",
+        title: "Video Editor / Post-production",
+        period: "2020 — present",
         company: "Freelance",
-        description:
-          "Трейлеры, промо-ролики, VFX, AI-продакшн для кино и digital-проектов.",
+        description: "Trailers, promos, VFX and AI production for film and digital.",
       },
       {
-        title: "Фестивальный координатор",
-        period: "2022 — настоящее время",
+        title: "Festival coordinator",
+        period: "2022 — present",
         company: "Freelance",
-        description:
-          "Подбор фестивалей, оформление заявок на FilmFreeway, ведение календаря и статусов.",
+        description: "Festival selection, FilmFreeway submissions, calendar and status management.",
       },
     ],
   },
 
   testimonials: [
     {
-      text: "Отличная работа над трейлером — динамичный монтаж, точное попадание в настроение фильма. Рекомендую!",
-      author: "Алексей К.",
-      role: "Режиссёр",
+      text: "Excellent trailer work — dynamic editing that nailed the film's mood. Highly recommend.",
+      author: "Alex K.",
+      role: "Director",
     },
     {
-      text: "Быстро и качественно сделали серию reels для бренда. Контент сразу пошёл в работу.",
-      author: "Мария С.",
-      role: "SMM-менеджер",
+      text: "Fast, quality reels for our brand. Content went live immediately.",
+      author: "Maria S.",
+      role: "SMM Manager",
     },
     {
-      text: "Помог с подачей на фестивали — всё структурировано, понятный календарь и статусы.",
-      author: "Дмитрий В.",
-      role: "Продюсер",
+      text: "Helped with festival submissions — clear calendar and status tracking throughout.",
+      author: "Dmitry V.",
+      role: "Producer",
     },
   ],
 

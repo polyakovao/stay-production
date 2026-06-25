@@ -1,27 +1,35 @@
-# Portfolio Site
+# STAY Production — Portfolio Site
 
-Минималистичный сайт-визитка на HTML + CSS + JS.
+Minimal cinematic portfolio site in HTML + CSS + JS. English only.
 
-## Запуск
+## Run locally
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Откройте http://localhost:8080
+Open http://localhost:8080
 
-## Структура
+## Structure
 
 ```
 ├── index.html
 ├── css/
 ├── js/
-│   └── config.js   ← контент и настройки
+│   └── config.js   ← all content & settings
 └── assets/
 ```
 
-## Настройка
+## Customize
 
-Весь контент — в `js/config.js`: имя, контакты, портфолио, резюме, API endpoints для Laravel.
+Edit `js/config.js`:
+- Name, bio, hero slides, portfolio videos
+- Navigation, process steps, testimonials
+- API endpoints for Laravel backend
 
-Медиа: `assets/video/hero-reel.mp4`, `assets/images/`, `assets/resume.pdf`
+## Features
+
+- **Hero carousel** — Gemini Omni–style horizontal slides (intro + featured work)
+- **Portfolio** — category filters + grouped blocks
+- **Contact** — calendar booking (API stubs ready for Laravel)
+- **Dark theme** — mobile optimized

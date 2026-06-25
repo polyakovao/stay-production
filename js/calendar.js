@@ -25,10 +25,10 @@ const Calendar = {
     const year = this.currentDate.getFullYear();
     const month = this.currentDate.getMonth();
     const monthNames = [
-      "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
-      "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December",
     ];
-    const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+    const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
@@ -69,11 +69,11 @@ const Calendar = {
 
     this.elements.container.innerHTML = `
       <div class="calendar__header">
-        <button class="calendar__nav-btn" id="calPrev" aria-label="Предыдущий месяц">
+        <button class="calendar__nav-btn" id="calPrev" aria-label="Previous month">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <span class="calendar__month">${monthNames[month]} ${year}</span>
-        <button class="calendar__nav-btn" id="calNext" aria-label="Следующий месяц">
+        <button class="calendar__nav-btn" id="calNext" aria-label="Next month">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </div>
@@ -91,19 +91,19 @@ const Calendar = {
     this.updateSubmitState();
 
     this.elements.timeSlots.hidden = false;
-    this.elements.timeSlotsGrid.innerHTML = `<p style="color:var(--color-text-secondary);font-size:var(--text-sm);grid-column:1/-1;text-align:center;padding:var(--space-4)">Загрузка...</p>`;
+    this.elements.timeSlotsGrid.innerHTML = `<p style="color:var(--color-text-secondary);font-size:var(--text-sm);grid-column:1/-1;text-align:center;padding:var(--space-4)">Loading...</p>`;
 
     try {
       this.availableSlots = await Api.getAvailability(dateStr);
       this.renderTimeSlots();
     } catch {
-      this.elements.timeSlotsGrid.innerHTML = `<p style="color:var(--color-error);font-size:var(--text-sm);grid-column:1/-1;text-align:center">Не удалось загрузить слоты</p>`;
+      this.elements.timeSlotsGrid.innerHTML = `<p style="color:var(--color-error);font-size:var(--text-sm);grid-column:1/-1;text-align:center">Failed to load time slots</p>`;
     }
   },
 
   renderTimeSlots() {
     if (this.availableSlots.length === 0) {
-      this.elements.timeSlotsGrid.innerHTML = `<p style="color:var(--color-text-secondary);font-size:var(--text-sm);grid-column:1/-1;text-align:center;padding:var(--space-4)">Нет свободных слотов</p>`;
+      this.elements.timeSlotsGrid.innerHTML = `<p style="color:var(--color-text-secondary);font-size:var(--text-sm);grid-column:1/-1;text-align:center;padding:var(--space-4)">No available slots</p>`;
       return;
     }
 
@@ -171,7 +171,7 @@ const Calendar = {
     if (!name || !email || !this.selectedDate || !this.selectedTime) return;
 
     this.elements.submit.disabled = true;
-    this.elements.submit.textContent = "Отправка...";
+    this.elements.submit.textContent = "Sending...";
 
     try {
       const result = await Api.submitBooking({
@@ -189,9 +189,9 @@ const Calendar = {
       this.elements.timeSlots.hidden = true;
       this.render();
     } catch {
-      showToast("Ошибка отправки. Попробуйте позже.", "error");
+      showToast("Failed to send. Please try again later.", "error");
     } finally {
-      this.elements.submit.textContent = "Забронировать созвон";
+      this.elements.submit.textContent = "Book a call";
       this.updateSubmitState();
     }
   },
