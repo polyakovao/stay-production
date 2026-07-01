@@ -1,5 +1,5 @@
 /**
- * Hero carousel — Gemini Omni–inspired horizontal slides
+ * Hero — Gemini Omni fullscreen carousel
  */
 
 const Hero = {
@@ -14,7 +14,7 @@ const Hero = {
 
     this.render();
     this.bindEvents();
-    this.updateActive();
+    requestAnimationFrame(() => this.goTo(0, false));
   },
 
   render() {
@@ -24,19 +24,19 @@ const Hero = {
       .map((slide, i) => {
         if (slide.type === "intro") {
           return `
-            <article class="hero-slide hero-slide--intro" data-index="${i}">
-              <div class="hero-slide__media">
-                <img src="${slide.background}" alt="" class="hero-slide__bg">
-                <div class="hero-slide__overlay"></div>
+            <article class="omni-slide omni-slide--intro" data-index="${i}">
+              <div class="omni-slide__media">
+                <img src="${slide.background}" alt="" class="omni-slide__bg">
+                <div class="omni-slide__scrim"></div>
               </div>
-              <div class="hero-slide__body">
-                <p class="hero-slide__roles">${SITE_CONFIG.roles}</p>
-                <h1 class="hero-slide__name">${SITE_CONFIG.name}</h1>
-                <p class="hero-slide__bio">${SITE_CONFIG.bio}</p>
-                <div class="hero-slide__actions">
-                  <a href="#portfolio" class="btn btn--outline">Selected Work ↗</a>
-                  <a href="${SITE_CONFIG.resumeUrl}" class="btn btn--outline" download>View Resume ↗</a>
-                  <a href="#contact" class="btn btn--primary">Book a Call ↗</a>
+              <div class="omni-slide__center">
+                <h1 class="omni-slide__title">${SITE_CONFIG.name}</h1>
+                <p class="omni-slide__subtitle">${SITE_CONFIG.roles}</p>
+                <p class="omni-slide__desc">${SITE_CONFIG.bio}</p>
+                <div class="omni-slide__actions">
+                  <a href="#portfolio" class="btn btn--solid">Selected Work</a>
+                  <a href="${SITE_CONFIG.resumeUrl}" class="btn btn--solid" download>View Resume</a>
+                  <a href="#contact" class="btn btn--glass">Book a Call</a>
                 </div>
               </div>
             </article>
@@ -44,19 +44,19 @@ const Hero = {
         }
 
         return `
-          <article class="hero-slide hero-slide--video" data-index="${i}" data-video-id="${slide.youtubeId}">
-            <div class="hero-slide__media">
-              <img src="${slide.thumbnail}" alt="${slide.title}" class="hero-slide__bg">
-              <div class="hero-slide__overlay"></div>
-              <p class="hero-slide__caption">${slide.caption}</p>
-              <button class="hero-slide__play" aria-label="Play ${slide.title}">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+          <article class="omni-slide omni-slide--video" data-index="${i}" data-video-id="${slide.youtubeId}">
+            <div class="omni-slide__media">
+              <img src="${slide.thumbnail}" alt="${slide.title}" class="omni-slide__bg">
+              <div class="omni-slide__scrim omni-slide__scrim--light"></div>
+              <p class="omni-slide__prompt">${slide.caption}</p>
+              <button class="omni-slide__play" aria-label="Play ${slide.title}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </button>
-              <button class="hero-slide__mute" aria-label="Toggle sound" aria-pressed="true">
-                <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <button class="omni-slide__mute" aria-label="Toggle sound" aria-pressed="true">
+                <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
                   <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
                 </svg>
-                <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" hidden>
+                <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" hidden>
                   <path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
                 </svg>
               </button>
@@ -69,9 +69,9 @@ const Hero = {
     this.elements.thumbs.innerHTML = slides
       .map(
         (slide, i) => `
-        <button class="hero-thumb${i === 0 ? " is-active" : ""}" data-index="${i}" aria-label="Go to slide ${i + 1}">
+        <button class="omni-thumb${i === 0 ? " is-active" : ""}" data-index="${i}" aria-label="Slide ${i + 1}">
           ${slide.type === "intro"
-            ? `<span class="hero-thumb__label">Intro</span>`
+            ? `<span class="omni-thumb__dot"></span>`
             : `<img src="${slide.thumbnail}" alt="${slide.title}">`}
         </button>
       `
@@ -84,24 +84,24 @@ const Hero = {
     this.elements.next.addEventListener("click", () => this.goTo(this.currentIndex + 1));
 
     this.elements.thumbs.addEventListener("click", (e) => {
-      const btn = e.target.closest(".hero-thumb");
+      const btn = e.target.closest(".omni-thumb");
       if (btn) this.goTo(Number(btn.dataset.index));
     });
 
     this.elements.track.addEventListener("click", (e) => {
-      const playBtn = e.target.closest(".hero-slide__play");
-      const slide = e.target.closest(".hero-slide--video");
+      const playBtn = e.target.closest(".omni-slide__play");
+      const slide = e.target.closest(".omni-slide--video");
       if (playBtn && slide) {
         Portfolio.openModal(slide.dataset.videoId);
         return;
       }
 
-      const muteBtn = e.target.closest(".hero-slide__mute");
+      const muteBtn = e.target.closest(".omni-slide__mute");
       if (muteBtn) {
-        const pressed = muteBtn.getAttribute("aria-pressed") === "true";
-        muteBtn.setAttribute("aria-pressed", !pressed);
-        muteBtn.querySelector(".icon-muted").hidden = !pressed;
-        muteBtn.querySelector(".icon-unmuted").hidden = pressed;
+        const muted = muteBtn.getAttribute("aria-pressed") === "true";
+        muteBtn.setAttribute("aria-pressed", !muted);
+        muteBtn.querySelector(".icon-muted").hidden = !muted;
+        muteBtn.querySelector(".icon-unmuted").hidden = muted;
       }
     });
 
@@ -113,17 +113,23 @@ const Hero = {
     });
   },
 
-  goTo(index) {
-    const slides = this.elements.track.querySelectorAll(".hero-slide");
+  goTo(index, smooth = true) {
+    const slides = this.elements.track.querySelectorAll(".omni-slide");
     const max = slides.length - 1;
     this.currentIndex = Math.max(0, Math.min(index, max));
-    slides[this.currentIndex].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+
+    slides[this.currentIndex].scrollIntoView({
+      behavior: smooth ? "smooth" : "instant",
+      inline: "center",
+      block: "nearest",
+    });
+
     this.updateActive();
   },
 
   onScroll() {
     const track = this.elements.track;
-    const slides = track.querySelectorAll(".hero-slide");
+    const slides = track.querySelectorAll(".omni-slide");
     const center = track.scrollLeft + track.clientWidth / 2;
     let closest = 0;
     let minDist = Infinity;
@@ -144,10 +150,11 @@ const Hero = {
   },
 
   updateActive() {
-    const slides = this.elements.track.querySelectorAll(".hero-slide");
-    slides.forEach((s, i) => s.classList.toggle("is-active", i === this.currentIndex));
+    this.elements.track.querySelectorAll(".omni-slide").forEach((s, i) => {
+      s.classList.toggle("is-active", i === this.currentIndex);
+    });
 
-    this.elements.thumbs.querySelectorAll(".hero-thumb").forEach((t, i) => {
+    this.elements.thumbs.querySelectorAll(".omni-thumb").forEach((t, i) => {
       t.classList.toggle("is-active", i === this.currentIndex);
     });
   },

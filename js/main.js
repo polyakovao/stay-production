@@ -49,12 +49,15 @@ function renderNavigation() {
     .join("");
 
   const ctaHtml = SITE_CONFIG.headerCta
-    .map((cta) => `<a href="${cta.href}" class="header__cta">${cta.label} ↗</a>`)
+    .map((cta, i) => {
+      const cls = i === SITE_CONFIG.headerCta.length - 1 ? "header__cta header__cta--solid" : "header__cta";
+      return `<a href="${cta.href}" class="${cls}">${cta.label}</a>`;
+    })
     .join("");
 
   document.getElementById("headerCta").innerHTML = ctaHtml;
   document.getElementById("mobileNavCta").innerHTML = SITE_CONFIG.headerCta
-    .map((cta) => `<a href="${cta.href}" class="btn btn--outline btn--large">${cta.label} ↗</a>`)
+    .map((cta) => `<a href="${cta.href}" class="btn btn--outline btn--large">${cta.label}</a>`)
     .join("");
 }
 
@@ -85,7 +88,7 @@ function renderFestivals() {
         ${f.tags.map((t) => `<span class="festival-banner__tag">${t}</span>`).join("")}
       </div>
     </div>
-    <a href="#contact" class="btn btn--primary">Book a Call ↗</a>
+    <a href="#contact" class="btn btn--primary">Book a Call</a>
   `;
 }
 
